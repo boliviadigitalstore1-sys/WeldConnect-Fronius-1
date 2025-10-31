@@ -3,508 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Experto en Optimización de Soldadura BDS</title>
-    <!-- Carga de Tailwind CSS para el styling -->
+    <title>Asistente Digital de Herramientas de Soldadura Móvil (ADHSM)</title>
+    <!-- Carga de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración para usar la fuente Inter y colores base -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9; /* slate-100 */
+            background-color: #e2e8f0; /* slate-200 */
+        }
+        /* Estilo para tabla de resultados con notación LaTeX */
+        .latex-formula {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-<!-- Contenedor Principal -->
-<div class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-5xl bg-white shadow-2xl rounded-xl p-6 md:p-10 border-t-8 border-indigo-700">
+<!-- Contenedor Principal (Simulación de la App Móvil) -->
+<div class="min-h-screen flex items-start justify-center p-4">
+    <div class="w-full max-w-lg bg-white shadow-2xl rounded-2xl p-6 border-t-8 border-cyan-600 mt-4 md:mt-8">
         
-        <!-- Encabezado BDS -->
-        <header class="text-center mb-8">
-            <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Asistente Experto en Optimización de Soldadura BDS</h1>
-            <p class="text-xl text-indigo-700 font-semibold border-b pb-2">Servicio de la Academia de Soldadura BDS</p>
-            <p class="text-gray-600 mt-3">Proporcione las especificaciones técnicas detalladas para un análisis riguroso y la optimización de sus parámetros.</p>
+        <!-- Encabezado de la Aplicación -->
+        <header class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Pocket Welder Helper (ADHSM)</h1>
+            <p class="text-sm text-cyan-600 font-medium">Asistente Digital de Herramientas de Soldadura Móvil</p>
         </header>
 
-        <!-- Formulario de Entrada Avanzado -->
-        <div id="input-form" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <!-- Proceso de Soldadura -->
-            <div>
-                <label for="process" class="block text-sm font-medium text-gray-700 mb-1">1. Proceso / Transferencia</label>
-                <select id="process" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-                    <option value="">Seleccione el Proceso</option>
-                    <option value="MIG/MAG_Pulsado">MIG/MAG Pulsado</option>
-                    <option value="MIG/MAG_Spray">MIG/MAG Spray Arc</option>
-                    <option value="TIG_DC">TIG DC (Acero/Inoxidable)</option>
-                    <option value="TIG_AC">TIG AC (Aluminio)</option>
-                </select>
-            </div>
-
-            <!-- Material Base Primario -->
-            <div>
-                <label for="material" class="block text-sm font-medium text-gray-700 mb-1">2. Material Base Primario</label>
-                <select id="material" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-                    <option value="">Seleccione el Material</option>
-                    <option value="S355JR">Acero Estructural S355JR</option>
-                    <option value="304L">Acero Inoxidable Austenítico 304L</option>
-                    <option value="6061-T6">Aleación de Aluminio 6061-T6</option>
-                </select>
-            </div>
-
-            <!-- Espesor del Material (mm) -->
-            <div>
-                <label for="thickness" class="block text-sm font-medium text-gray-700 mb-1">3. Espesor 'e' (mm)</label>
-                <input type="number" id="thickness" min="1" max="50" placeholder="Ej: 8.0" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-            </div>
-
-            <!-- Geometría de Junta -->
-            <div>
-                <label for="joint" class="block text-sm font-medium text-gray-700 mb-1">4. Geometría de Junta</label>
-                <select id="joint" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-                    <option value="">Seleccione la Junta</option>
-                    <option value="Filete">Junta en T (Filete)</option>
-                    <option value="A_tope">Junta a Tope (V-groove)</option>
-                    <option value="Esquina">Junta de Esquina Externa</option>
-                </select>
-            </div>
-
-            <!-- Posición de Soldadura -->
-            <div>
-                <label for="position" class="block text-sm font-medium text-gray-700 mb-1">5. Posición de Soldadura</label>
-                <select id="position" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-                    <option value="">Seleccione la Posición</option>
-                    <option value="1G">Plana (1G/1F)</option>
-                    <option value="2G">Horizontal (2G/2F)</option>
-                    <option value="3G">Vertical Ascendente (3G/3F)</option>
-                </select>
-            </div>
-            
-            <!-- Tipo de Material de Aporte (AWS/EN) -->
-            <div>
-                <label for="filler_type" class="block text-sm font-medium text-gray-700 mb-1">6. Clasificación de Aporte (AWS/EN)</label>
-                <select id="filler_type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-                    <option value="">Seleccione Clasificación</option>
-                    <option value="ER70S-6">ER70S-6 (C-Mn)</option>
-                    <option value="ER308LSi">ER308LSi (Inoxidable)</option>
-                    <option value="ER4043">ER4043 (Aluminio)</option>
-                </select>
-            </div>
-
-            <!-- Diámetro del Alambre/Varilla (mm) -->
-            <div>
-                <label for="diameter" class="block text-sm font-medium text-gray-700 mb-1">7. Diámetro Ø (mm)</label>
-                <select id="diameter" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-                    <option value="">Seleccione el Diámetro</option>
-                    <option value="1.0">1.0 mm</option>
-                    <option value="1.2">1.2 mm</option>
-                    <option value="1.6">1.6 mm</option>
-                    <option value="2.4">2.4 mm (TIG)</option>
-                </select>
-            </div>
-
-            <!-- Gas Protector (Norma/Mezcla) -->
-            <div class="md:col-span-2">
-                <label for="gas" class="block text-sm font-medium text-gray-700 mb-1">8. Gas Protector (Norma y Composición)</label>
-                <select id="gas" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 shadow-sm bg-gray-50">
-                    <option value="">Seleccione el Gas</option>
-                    <option value="M21">Ar + 18% CO₂ (EN ISO 14175-M21)</option>
-                    <option value="I1">Argón Puro (EN ISO 14175-I1)</option>
-                </select>
-            </div>
+        <!-- Contenedor Dinámico de Módulos -->
+        <div id="app-container">
+            <!-- El contenido se cargará aquí por JavaScript -->
         </div>
+
+        <!-- Área de Mensajes (Modal no-alert) -->
+        <div id="message-box" class="mt-4 p-3 text-sm rounded-lg text-center hidden"></div>
         
-        <!-- Área de Mensajes y Botón de Cálculo -->
-        <div class="mt-8">
-            <button id="calculate-btn" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.01] shadow-xl focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                Realizar Análisis y Optimización BDS
-            </button>
-            <div id="message-box" class="mt-4 p-4 text-sm rounded-lg text-center hidden"></div>
+        <!-- Instrucción de Cierre (Fija) -->
+        <div class="mt-6 pt-4 border-t border-gray-200 text-center">
+            <p class="text-xs text-gray-500 font-medium">Simulación de Pocket Welder Helper, un valioso activo para la productividad en soldadura.</p>
         </div>
-
-        <!-- Área de Resultados (Oculta por defecto) -->
-        <div id="results-area" class="mt-10 pt-6 border-t border-gray-300 hidden">
-            
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Informe de Optimización BDS</h2>
-            
-            <!-- Sección de Parámetros Operacionales -->
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-3 border-b border-indigo-200 pb-1">Parámetros Operacionales Sugeridos</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-                        <thead>
-                            <tr class="bg-indigo-50">
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Parámetro</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Rango Óptimo / Valor</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Justificación Técnica</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Corriente -->
-                            <tr class="border-t">
-                                <td class="px-4 py-3 font-medium text-gray-800">Corriente de Soldadura (I)</td>
-                                <td id="output-amperage" class="px-4 py-3 text-indigo-600 font-bold"></td>
-                                <td id="justify-amperage" class="px-4 py-3 text-gray-600 text-sm"></td>
-                            </tr>
-                            <!-- Voltaje -->
-                            <tr class="border-t bg-gray-50">
-                                <td class="px-4 py-3 font-medium text-gray-800">Voltaje de Arco (U)</td>
-                                <td id="output-voltage" class="px-4 py-3 text-indigo-600 font-bold"></td>
-                                <td id="justify-voltage" class="px-4 py-3 text-gray-600 text-sm"></td>
-                            </tr>
-                            <!-- WFS / Tasa de Fusión -->
-                            <tr id="wfs-row" class="border-t">
-                                <td class="px-4 py-3 font-medium text-gray-800">Vel. Alimentación (Vf) / Tasa de Fusión</td>
-                                <td id="output-wfs" class="px-4 py-3 text-indigo-600 font-bold"></td>
-                                <td id="justify-wfs" class="px-4 py-3 text-gray-600 text-sm"></td>
-                            </tr>
-                            <!-- Velocidad de Avance -->
-                            <tr class="border-t bg-gray-50">
-                                <td class="px-4 py-3 font-medium text-gray-800">Velocidad de Avance (Vs)</td>
-                                <td id="output-travel-speed" class="px-4 py-3 text-indigo-600 font-bold"></td>
-                                <td id="justify-travel-speed" class="px-4 py-3 text-gray-600 text-sm"></td>
-                            </tr>
-                            <!-- Flujo de Gas -->
-                            <tr class="border-t">
-                                <td class="px-4 py-3 font-medium text-gray-800">Flujo de Gas Protector</td>
-                                <td id="output-gas-flow" class="px-4 py-3 text-indigo-600 font-bold"></td>
-                                <td id="justify-gas-flow" class="px-4 py-3 text-gray-600 text-sm"></td>
-                            </tr>
-                            <!-- Stick-Out / Proyección -->
-                            <tr class="border-t bg-gray-50">
-                                <td class="px-4 py-3 font-medium text-gray-800">Extensión de Alambre (Stick-Out)</td>
-                                <td id="output-stick-out" class="px-4 py-3 text-indigo-600 font-bold"></td>
-                                <td id="justify-stick-out" class="px-4 py-3 text-gray-600 text-sm"></td>
-                            </tr>
-                             <!-- Parámetro de Proceso Avanzado (Pulsado/AC) -->
-                            <tr id="pulse-row" class="border-t">
-                                <td class="px-4 py-3 font-medium text-gray-800">Configuración Avanzada (Pulso/AC Balance)</td>
-                                <td id="output-advanced-param" class="px-4 py-3 text-indigo-600 font-bold"></td>
-                                <td id="justify-advanced-param" class="px-4 py-3 text-gray-600 text-sm"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Sección de Desempeño y Control de Calidad -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Resumen Técnico BDS -->
-                <div class="p-5 bg-indigo-50 rounded-xl shadow-lg border border-indigo-200">
-                    <h3 class="text-xl font-bold text-indigo-700 mb-3 border-b border-indigo-300 pb-1">Resumen Técnico BDS (Cálculos de Desempeño)</h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex justify-between items-center"><span class="font-medium">Aporte Térmico (HI):</span> <span id="output-heat-input" class="font-bold text-lg text-indigo-600"></span></li>
-                        <li class="flex justify-between items-center"><span class="font-medium">Tasa de Deposición (DR):</span> <span id="output-deposition-rate" class="font-bold text-lg text-indigo-600"></span></li>
-                        <li class="flex justify-between items-center"><span class="font-medium">Tiempo de Soldadura Est. (1m):</span> <span id="output-weld-time" class="font-bold text-lg text-indigo-600"></span></li>
-                    </ul>
-                </div>
-
-                <!-- Consideraciones Técnicas BDS -->
-                <div class="p-5 bg-yellow-50 rounded-xl shadow-lg border border-yellow-300">
-                    <h3 class="text-xl font-bold text-yellow-800 mb-3 border-b border-yellow-300 pb-1">Consideraciones Técnicas BDS</h3>
-                    <p id="output-recommendation" class="text-yellow-700 text-sm mb-4"></p>
-                    <p class="text-yellow-900 font-semibold text-xs mt-4">
-                        <span class="text-sm">⚠️</span> Enfatizamos la necesidad de una <span class="underline">Calificación del Procedimiento de Soldadura (WPS)</span> y la cualificación del soldador según normas aplicables (ISO 15614 / ISO 9606).
-                    </p>
-                </div>
-            </div>
-            
-        </div>
-        
-        <!-- Pie de página BDS -->
-        <footer class="text-center mt-12 pt-4 border-t border-gray-300">
-            <p class="text-sm text-gray-500 font-mono">Análisis validado por la Academia de Soldadura BDS.</p>
-        </footer>
 
     </div>
 </div>
 
 <script>
-    // Variables globales para la UI
-    const processSelect = document.getElementById('process');
-    const materialSelect = document.getElementById('material');
-    const thicknessInput = document.getElementById('thickness');
-    const jointSelect = document.getElementById('joint');
-    const positionSelect = document.getElementById('position');
-    const fillerTypeSelect = document.getElementById('filler_type');
-    const diameterSelect = document.getElementById('diameter');
-    const gasSelect = document.getElementById('gas');
-    const calculateBtn = document.getElementById('calculate-btn');
-    const resultsArea = document.getElementById('results-area');
+    let currentModule = 0; // 0: Menu, 1: Params, 2: Budget, 3: Reference
+    const appContainer = document.getElementById('app-container');
     const messageBox = document.getElementById('message-box');
-    const wfsRow = document.getElementById('wfs-row');
-    const pulseRow = document.getElementById('pulse-row');
 
-    // Base de Conocimiento de la Academia de Soldadura BDS (Parámetros Ultra Profesionales)
+    // --- BASE DE CONOCIMIENTO (MÓDULO 1) ---
     const PARAMETER_GUIDE = {
-        // SCENARIO 1: MIG/MAG Pulsado - Acero Estructural S355JR - 1.2 mm - M21 - Filete 3G (Vertical Ascendente)
-        'MIG/MAG_Pulsado_S355JR_Filete_3G_ER70S-6_1.2_M21': {
-            amperage: '160 - 200 A',
-            voltage: '24.0 - 26.0 V', // Voltaje de arco
-            wfs: '7.5 - 9.0 m/min',
-            travelSpeed: '25 - 35 cm/min',
-            gasFlow: '15 - 18 L/min',
-            stickOut: '15 - 20 mm', // Proyección moderada para Pulso
-            advancedParam: 'Frecuencia de Pulso: 100 - 150 Hz',
-            heatInput: '0.95 - 1.30 kJ/mm', // HI bajo para 3G y S355JR
-            depositionRate: '2.8 - 3.5 kg/h',
-            justify: {
-                amperage: 'Rango optimizado para transferencia pulsada estable en 3G, minimizando la piscina.',
-                voltage: 'Ajuste de arco fino para mantener una longitud de arco corta y penetración controlada.',
-                wfs: 'Correlacionado con el amperaje, asegurando una fusión adecuada con el pulso.',
-                travelSpeed: 'Velocidad crítica para mantener el control de la piscina en posición vertical.',
-                gasFlow: 'Flujo estándar M21, suficiente para blindaje sin turbulencia excesiva.',
-                stickOut: 'Óptimo para pre-calentamiento resistivo y estabilidad del arco.',
-                advancedParam: 'La frecuencia asegura una gota por pulso y un bajo aporte térmico promedio.'
-            },
-            recommendation: 'Control de Distorsión: Debido a la posición 3G y el espesor (> 6mm), utilice puentes de fijación robustos. Riesgo: Fusión incompleta en la raíz si la velocidad de avance es muy alta. Verifique la limpieza de los bordes para evitar porosidad.'
-        },
-
-        // SCENARIO 2: TIG DC - Acero Inoxidable Austenítico 304L - 2.4 mm Rod - I1 - A tope 1G (Plana)
-        'TIG_DC_304L_A_tope_1G_ER308LSi_2.4_I1': {
-            amperage: '130 - 170 A',
-            voltage: '10.0 - 14.0 V', // Voltaje TIG es bajo
-            wfs: '2.5 - 4.0 g/min', // Tasa de fusión manual
-            travelSpeed: '10 - 18 cm/min',
-            gasFlow: '8 - 12 L/min', // Bajo flujo para argón puro
-            stickOut: '3 - 5 mm (Proyección de Tungsteno)', // TIG proyección
-            advancedParam: 'Preflujo de Gas: 0.5s / Postflujo de Gas: 8-12s',
-            heatInput: '0.6 - 0.9 kJ/mm', // HI bajo para 304L (control de carburos)
-            depositionRate: '0.2 - 0.4 kg/h',
-            justify: {
-                amperage: 'Rango ideal para penetración total controlada en 3mm, minimizando el sobrecalentamiento.',
-                voltage: 'Voltaje de arco inherentemente bajo en TIG DC.',
-                wfs: 'Estimación de la tasa de adición manual de varilla.',
-                travelSpeed: 'Velocidad baja y constante para permitir la solidificación controlada y evitar el "sugaring".',
-                gasFlow: 'Blindaje laminar adecuado para una atmósfera inerte, evitando la oxidación.',
-                stickOut: 'Proyección mínima para concentración de calor y estabilidad del arco.',
-                advancedParam: 'Postflujo CRÍTICO para proteger el tungsteno y el cordón de soldadura del aire ambiente hasta el enfriamiento.'
-            },
-            recommendation: 'Control de la Microestructura: Mantenga el aporte térmico en el rango inferior para evitar la precipitación de carburos de cromo. Use gas de purga (backing gas, Argón puro) en la raíz para evitar la oxidación ("sugaring"). Electrodo: Tungsteno Lanthanated 2.0% (WZ-2).'
-        },
-
-        // SCENARIO 3: TIG AC - Aleación de Aluminio 6061-T6 - 4 mm - ER4043 - I1 - A tope 1G
-        'TIG_AC_6061-T6_A_tope_1G_ER4043_2.4_I1': {
-            amperage: '150 - 200 A',
-            voltage: '12.0 - 16.0 V',
-            wfs: '2.5 - 4.0 g/min',
-            travelSpeed: '15 - 25 cm/min',
-            gasFlow: '10 - 15 L/min',
-            stickOut: '2 - 4 mm (Proyección de Tungsteno)',
-            advancedParam: 'Balance AC: 65% - 75% EN (Polaridad Negativa). Frecuencia AC: 100 - 120 Hz.',
-            heatInput: '0.8 - 1.2 kJ/mm', 
-            depositionRate: '0.3 - 0.5 kg/h',
-            justify: {
-                amperage: 'Amperaje elevado para la alta conductividad térmica del Aluminio.',
-                voltage: 'Voltaje de arco adaptado para TIG AC.',
-                wfs: 'Tasa de fusión manual de varilla.',
-                travelSpeed: 'Moderada, pero constante para evitar el colapso de la piscina.',
-                gasFlow: 'Flujo suficiente para una zona de protección amplia en TIG AC.',
-                stickOut: 'Proyección mínima, crucial para la estabilidad del arco AC.',
-                advancedParam: 'El Balance EN alto proporciona máxima penetración (limpieza catódica mínima). La frecuencia estrecha el cono de arco.'
-            },
-            recommendation: 'Precalentamiento: Se recomienda precalentar ligeramente (50°C - 80°C) si el espesor es superior a 6 mm. El Balance AC es CRÍTICO: Use 70% EN para un buen equilibrio entre limpieza de óxido y penetración. La alta conductividad requiere velocidad de avance rápida.'
-        },
-        
-        // SCENARIO 4: MIG/MAG Spray Arc - Aleación de Aluminio 6061-T6 - 1.2 mm - I1 - Esquina 1F (Plana)
-        'MIG/MAG_Spray_6061-T6_Esquina_1F_ER4043_1.2_I1': {
-            amperage: '140 - 220 A',
-            voltage: '22.0 - 26.0 V',
-            wfs: '10.0 - 16.0 m/min',
-            travelSpeed: '40 - 60 cm/min',
-            gasFlow: '18 - 25 L/min',
-            stickOut: '12 - 15 mm',
-            advancedParam: 'Tipo de Transferencia: Spray Arc - Velocidad de subida de corriente CRÍTICA para evitar el corto circuito.',
-            heatInput: '0.7 - 1.2 kJ/mm', 
-            depositionRate: '2.0 - 3.8 kg/h',
-            justify: {
-                amperage: 'Alto amperaje necesario para mantener el modo Spray Arc en aluminio y superar la conductividad térmica.',
-                voltage: 'Voltaje de arco ideal para estabilidad de pulverización en gas 100% Argón.',
-                wfs: 'Tasa alta requerida para alcanzar la densidad de corriente del Spray Arc.',
-                travelSpeed: 'Velocidad de avance alta para controlar la piscina fundida y el aporte térmico en aluminio.',
-                gasFlow: 'Flujo alto, necesario para mantener una cobertura estable debido a la alta velocidad de la operación.',
-                stickOut: 'Proyección corta, optimizando la concentración de corriente.',
-                advancedParam: 'El modo Spray Arc ofrece la mayor productividad y control de calidad en Aluminio.'
-            },
-            recommendation: 'Preparación de Superficie: Limpie la capa de óxido de aluminio inmediatamente antes de soldar (cepillo de acero inoxidable dedicado). Utilice la función Push-Pull para la alimentación de alambre. Riesgo: Falta de fusión si la velocidad es excesiva.'
-        }
+        'MIG/MAG_Acero al Carbono_1.0': { I: '180 - 230', U: '23.0 - 25.5', Vf: '8.0 - 11.0', Fg: '15 - 18', Gas: 'Ar + 18% CO₂ (M21)' },
+        'MIG/MAG_Acero al Carbono_1.2': { I: '220 - 280', U: '25.0 - 28.0', Vf: '6.5 - 9.0', Fg: '16 - 20', Gas: 'Ar + 18% CO₂ (M21)' },
+        'MIG/MAG_Acero Inoxidable_1.0': { I: '160 - 200', U: '22.0 - 24.5', Vf: '7.0 - 9.0', Fg: '12 - 15', Gas: 'Ar + 2% O₂ (M12)' },
+        'MIG/MAG_Aluminio_1.2': { I: '190 - 250', U: '20.0 - 24.0', Vf: '10.0 - 15.0', Fg: '18 - 25', Gas: 'Argón Puro (I1)' },
+        'TIG DC_Acero Inoxidable_2.4': { I: '140 - 180', U: '10.0 - 14.0', Vf: 'N/A', Fg: '8 - 12', Gas: 'Argón Puro (I1)' },
+        'TIG AC_Aluminio_2.4': { I: '160 - 210', U: '12.0 - 16.0', Vf: 'N/A', Fg: '10 - 15', Gas: 'Argón Puro (I1)' },
+        'SMAW_Acero al Carbono_3.2': { I: '90 - 130', U: '20.0 - 24.0', Vf: 'N/A', Fg: 'N/A', Gas: 'N/A' },
     };
 
-    /**
-     * Muestra un mensaje de error o éxito.
-     * @param {string} text - Texto del mensaje.
-     * @param {boolean} isError - Si es un mensaje de error.
-     */
+    // --- UI HELPERS ---
+
     function displayMessage(text, isError = false) {
         messageBox.textContent = text;
-        messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'bg-red-200', 'text-red-800');
+        messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700');
         if (isError) {
-            messageBox.classList.add('bg-red-200', 'text-red-800');
+            messageBox.classList.add('bg-red-100', 'text-red-700');
         } else {
             messageBox.classList.add('bg-green-100', 'text-green-700');
         }
     }
 
-    /**
-     * Calcula una estimación de tiempo de soldadura para 1 metro.
-     * @param {string} travelSpeedRange - Rango de velocidad de avance en cm/min.
-     * @returns {string} Tiempo estimado.
-     */
-    function calculateWeldTime(travelSpeedRange) {
-        const parts = travelSpeedRange.split(' - ');
-        if (parts.length < 2) return 'N/A';
+    // --- MÓDULO DE MENÚ (Principal) ---
 
-        const minVs = parseFloat(parts[0]); // cm/min
-        const maxVs = parseFloat(parts[1].replace(' cm/min', '')); // cm/min
-        
-        // Queremos el tiempo para 1 metro (100 cm). El tiempo más rápido viene del maxVs.
-        // Tiempo = Distancia / Velocidad
-        // 100 cm / maxVs (cm/min) = Tiempo en minutos
-        const timeMin = 100 / maxVs;
-        const timeMax = 100 / minVs;
-
-        return `${timeMin.toFixed(1)} - ${timeMax.toFixed(1)} min`;
+    function renderMenu() {
+        currentModule = 0;
+        messageBox.classList.add('hidden');
+        appContainer.innerHTML = `
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Menú Principal</h2>
+            <div class="space-y-4">
+                <button onclick="renderModule1Input()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-150">
+                    <span class="text-xl mr-2">1</span> Cálculo Rápido de Parámetros de Máquina
+                </button>
+                <button onclick="renderModule2Input()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-150">
+                    <span class="text-xl mr-2">2</span> Módulo de Estimación de Presupuesto
+                </button>
+                <button onclick="renderModule3()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-150">
+                    <span class="text-xl mr-2">3</span> Tabla de Referencia Rápida
+                </button>
+            </div>
+        `;
     }
 
-    /**
-     * Simula la lógica de optimización BDS.
-     * @returns {object|null} Los parámetros optimizados o null si faltan datos.
-     */
-    function calculateParameters() {
-        const process = processSelect.value;
-        const material = materialSelect.value;
-        const thickness = parseFloat(thicknessInput.value);
-        const joint = jointSelect.value;
-        const position = positionSelect.value;
-        const fillerType = fillerTypeSelect.value;
-        const diameter = diameterSelect.value;
-        const gas = gasSelect.value;
+    // --- MÓDULO 1: CÁLCULO RÁPIDO DE PARÁMETROS ---
 
-        // 1. Validación de entradas
-        if (!process || !material || isNaN(thickness) || !joint || !position || !fillerType || !diameter || !gas) {
-            displayMessage("¡ERROR CRÍTICO BDS! Debe completar TODAS las 8 especificaciones técnicas para que el análisis sea riguroso.", true);
-            resultsArea.classList.add('hidden');
-            return null;
+    function renderModule1Input() {
+        currentModule = 1;
+        messageBox.classList.add('hidden');
+        appContainer.innerHTML = `
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center border-b pb-2">Módulo 1: Parámetros de Máquina</h2>
+            <p class="text-sm text-gray-600 mb-4">Ingrese los datos para obtener los ajustes $I$, $U$ y $V_f$ optimizados.</p>
+            <div class="space-y-3">
+                <!-- Proceso -->
+                <div>
+                    <label for="p1_process" class="block text-sm font-medium text-gray-700">Proceso</label>
+                    <select id="p1_process" class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option value="">Seleccione...</option>
+                        <option value="MIG/MAG">MIG/MAG</option>
+                        <option value="TIG DC">TIG DC</option>
+                        <option value="TIG AC">TIG AC</option>
+                        <option value="SMAW">Electrodo Revestido (SMAW)</option>
+                    </select>
+                </div>
+                <!-- Material -->
+                <div>
+                    <label for="p1_material" class="block text-sm font-medium text-gray-700">Material Base</label>
+                    <select id="p1_material" class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option value="">Seleccione...</option>
+                        <option value="Acero al Carbono">Acero al Carbono</option>
+                        <option value="Acero Inoxidable">Acero Inoxidable</option>
+                        <option value="Aluminio">Aluminio</option>
+                    </select>
+                </div>
+                <!-- Espesor -->
+                <div>
+                    <label for="p1_thickness" class="block text-sm font-medium text-gray-700">Espesor ($e$) en mm</label>
+                    <input type="number" id="p1_thickness" step="0.5" placeholder="Ej: 6.0" class="w-full p-2 border border-gray-300 rounded-lg">
+                </div>
+                <!-- Diámetro -->
+                <div>
+                    <label for="p1_diameter" class="block text-sm font-medium text-gray-700">Diámetro del Consumible (Ø) en mm</label>
+                    <select id="p1_diameter" class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option value="">Seleccione...</option>
+                        <option value="1.0">1.0 mm</option>
+                        <option value="1.2">1.2 mm</option>
+                        <option value="2.4">2.4 mm (TIG)</option>
+                        <option value="3.2">3.2 mm (SMAW)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button onclick="calculateParams()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 mt-6 rounded-lg shadow-md transition duration-150">
+                Calcular Ajustes
+            </button>
+            <button onclick="renderMenu()" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 mt-3 rounded-lg transition duration-150">
+                ← Volver al Menú
+            </button>
+            <div id="module1_results" class="mt-6 hidden"></div>
+        `;
+    }
+
+    function calculateParams() {
+        const process = document.getElementById('p1_process').value;
+        const material = document.getElementById('p1_material').value;
+        const thickness = parseFloat(document.getElementById('p1_thickness').value);
+        const diameter = document.getElementById('p1_diameter').value;
+
+        if (!process || !material || isNaN(thickness) || !diameter) {
+            displayMessage("ADHSM: Error en la entrada. Por favor, complete todos los campos.", true);
+            return;
+        }
+
+        const key = `${process}_${material}_${diameter}`;
+        let params = PARAMETER_GUIDE[key];
+
+        if (!params) {
+            displayMessage(`ADHSM: No se encontró una referencia directa para ${key}. Use la Tabla de Referencia Rápida para más detalles.`, true);
+            return;
+        }
+
+        // Aplicar ajuste basado en espesor (Simulación de ajuste I)
+        let [minI, maxI] = params.I.split(' - ').map(Number);
+
+        if (process.includes('MIG/MAG') || process.includes('SMAW')) {
+            if (thickness < 5) { // Espesores delgados, ajuste a la baja
+                minI = Math.round(minI * 0.85);
+                maxI = Math.round(maxI * 0.95);
+            } else if (thickness > 15) { // Espesores gruesos, ajuste al alza
+                minI = Math.round(minI * 1.05);
+                maxI = Math.round(maxI * 1.15);
+            }
         }
         
-        // 2. Creación de la clave de búsqueda ultra-específica
-        let key = `${process}_${material}_${joint}_${position}_${fillerType}_${diameter}_${gas}`;
+        // Formatear resultados
+        params.I_adjusted = `${minI} - ${maxI}`;
+
+        renderModule1Results(params, process);
+    }
+
+    function renderModule1Results(params, process) {
+        const resultsDiv = document.getElementById('module1_results');
+        const isMIG = process.includes('MIG/MAG');
         
-        let parameters = PARAMETER_GUIDE[key];
+        resultsDiv.innerHTML = `
+            <h3 class="text-lg font-bold text-gray-800 mb-3 border-b border-gray-200 pb-1">Parámetros Optimizado (Inicio)</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg text-sm">
+                    <thead>
+                        <tr class="bg-cyan-50">
+                            <th class="px-4 py-2 text-left text-gray-700">Parámetro</th>
+                            <th class="px-4 py-2 text-left text-gray-700">Rango Optimizado Sugerido</th>
+                            <th class="px-4 py-2 text-left text-gray-700">Unidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-t">
+                            <td class="px-4 py-3 font-medium text-gray-800">Corriente ($\text{I}$)</td>
+                            <td class="px-4 py-3 text-cyan-600 font-bold latex-formula">${params.I_adjusted}</td>
+                            <td class="px-4 py-3">Amperios ($\text{A}$)</td>
+                        </tr>
+                        <tr class="border-t bg-gray-50">
+                            <td class="px-4 py-3 font-medium text-gray-800">Voltaje de Arco ($\text{U}$)</td>
+                            <td class="px-4 py-3 text-cyan-600 font-bold latex-formula">${params.U}</td>
+                            <td class="px-4 py-3">Voltios ($\text{V}$)</td>
+                        </tr>
+                        <tr class="border-t ${isMIG ? '' : 'hidden'}">
+                            <td class="px-4 py-3 font-medium text-gray-800">Vel. Alimentación ($\text{V}_\text{f}$)</td>
+                            <td class="px-4 py-3 text-cyan-600 font-bold latex-formula">${params.Vf}</td>
+                            <td class="px-4 py-3">m/min</td>
+                        </tr>
+                        <tr class="border-t ${isMIG ? 'bg-gray-50' : ''}">
+                            <td class="px-4 py-3 font-medium text-gray-800">Flujo de Gas ($\text{F}_\text{g}$)</td>
+                            <td class="px-4 py-3 text-cyan-600 font-bold latex-formula">${params.Fg}</td>
+                            <td class="px-4 py-3">L/min</td>
+                        </tr>
+                        <tr class="border-t bg-cyan-50">
+                            <td colspan="3" class="px-4 py-3 text-xs text-gray-700 font-medium">Gas Protector Típico: ${params.Gas}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+        resultsDiv.classList.remove('hidden');
+        displayMessage("ADHSM: Cálculo de parámetros completado. Estos rangos son el punto de partida ideal.", false);
+    }
 
-        // 3. Manejo de combinaciones no cubiertas (Alta probabilidad de no coincidencia en un simulador)
-        if (!parameters) {
-            // Buscamos un fallback basado solo en Material, Proceso y Posición si no es exacto
-            let fallbackKey;
+    // --- MÓDULO 2: ESTIMACIÓN DE PRESUPUESTO ---
 
-            if (process.includes('MIG/MAG') && material === 'S355JR') {
-                fallbackKey = 'MIG/MAG_Pulsado_S355JR_Filete_3G_ER70S-6_1.2_M21';
-            } else if (process.includes('TIG') && material === '304L') {
-                fallbackKey = 'TIG_DC_304L_A_tope_1G_ER308LSi_2.4_I1';
-            } else if (material === '6061-T6' && process === 'TIG_AC') {
-                fallbackKey = 'TIG_AC_6061-T6_A_tope_1G_ER4043_2.4_I1';
-            } else if (material === '6061-T6' && process.includes('MIG/MAG')) {
-                fallbackKey = 'MIG/MAG_Spray_6061-T6_Esquina_1F_ER4043_1.2_I1';
-            }
+    function renderModule2Input() {
+        currentModule = 2;
+        messageBox.classList.add('hidden');
+        appContainer.innerHTML = `
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center border-b pb-2">Módulo 2: Estimación de Presupuesto</h2>
+            <p class="text-sm text-gray-600 mb-4">Ingrese los datos financieros y de producción para estimar el costo total.</p>
+            <div class="space-y-3">
+                <!-- Longitud Total -->
+                <div>
+                    <label for="p2_length" class="block text-sm font-medium text-gray-700">Longitud Total del Cordón ($L$) en metros</label>
+                    <input type="number" id="p2_length" step="0.1" placeholder="Ej: 50.0" class="w-full p-2 border border-gray-300 rounded-lg">
+                </div>
+                <!-- Tasa de Deposición -->
+                <div>
+                    <label for="p2_dr" class="block text-sm font-medium text-gray-700">Tasa de Deposición Estimada ($\text{DR}$) en kg/h</label>
+                    <input type="number" id="p2_dr" step="0.1" placeholder="Ej: 1.5 (Valor Conservador)" class="w-full p-2 border border-gray-300 rounded-lg">
+                </div>
+                <!-- Costo Consumible -->
+                <div>
+                    <label for="p2_cc" class="block text-sm font-medium text-gray-700">Costo del Consumible ($\text{C}_c$) por kg (USD)</label>
+                    <input type="number" id="p2_cc" step="0.01" placeholder="Ej: 15.00" class="w-full p-2 border border-gray-300 rounded-lg">
+                </div>
+                <!-- Costo Soldador -->
+                <div>
+                    <label for="p2_ch" class="block text-sm font-medium text-gray-700">Costo por Hora del Soldador ($\text{C}_h$) (USD/hora)</label>
+                    <input type="number" id="p2_ch" step="0.01" placeholder="Ej: 30.00" class="w-full p-2 border border-gray-300 rounded-lg">
+                </div>
+            </div>
+
+            <button onclick="calculateBudget()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 mt-6 rounded-lg shadow-md transition duration-150">
+                Calcular Presupuesto
+            </button>
+            <button onclick="renderMenu()" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 mt-3 rounded-lg transition duration-150">
+                ← Volver al Menú
+            </button>
+            <div id="module2_results" class="mt-6 hidden"></div>
+        `;
+    }
+
+    function calculateBudget() {
+        const L = parseFloat(document.getElementById('p2_length').value);
+        const DR = parseFloat(document.getElementById('p2_dr').value);
+        const Cc = parseFloat(document.getElementById('p2_cc').value);
+        const Ch = parseFloat(document.getElementById('p2_ch').value);
+        
+        const FactorConsumo = 0.007; // kg/m (factor conservador para una pasada)
+
+        if (isNaN(L) || isNaN(DR) || isNaN(Cc) || isNaN(Ch) || DR <= 0) {
+            displayMessage("ADHSM: Error en la entrada. Verifique que todos los valores sean numéricos y DR > 0.", true);
+            return;
+        }
+
+        // 1. Masa de Consumible (M)
+        const M = L * FactorConsumo;
+        
+        // 2. Tiempo de Soldadura Neto (T_neto)
+        const T_neto = M / DR;
+
+        // 3. Costo de Material (C_m)
+        const Cm = M * Cc;
+
+        // 4. Costo de Mano de Obra (C_h)
+        const Ch_total = T_neto * Ch;
+
+        // 5. Presupuesto Total (C_total)
+        const C_total = Cm + Ch_total;
+
+        renderModule2Results(L, DR, FactorConsumo, M, T_neto, Cm, Ch_total, C_total);
+    }
+
+    function renderModule2Results(L, DR, FC, M, T_neto, Cm, Ch_total, C_total) {
+        const resultsDiv = document.getElementById('module2_results');
+        
+        resultsDiv.innerHTML = `
+            <h3 class="text-lg font-bold text-gray-800 mb-3 border-b border-gray-200 pb-1">Reporte de Costos Estimado</h3>
             
-            if (fallbackKey) {
-                parameters = PARAMETER_GUIDE[fallbackKey];
-                displayMessage(`Advertencia: La combinación solicitada (Key: ${key.replace(/_/g, ' | ')}) no está en la base de datos exacta. Se muestra la sugerencia BDS más cercana (Key: ${fallbackKey.replace(/_/g, ' | ')}). Ajuste sus datos.`, true);
-            } else {
-                 displayMessage("ERROR: No se encontró una referencia adecuada en la Base de Conocimiento BDS. Por favor, ajuste las especificaciones para una de las configuraciones de referencia (ej: S355JR/ER70S-6).", true);
-                 return null;
-            }
-        } else {
-            displayMessage("Análisis riguroso completado. Parámetros óptimos BDS presentados.", false);
-        }
+            <div class="space-y-4 p-4 bg-gray-50 rounded-lg border">
+                <p class="text-sm font-semibold text-gray-700">Longitud Total ($\text{L}$): <span class="float-right text-cyan-600">${L.toFixed(1)} m</span></p>
+                <p class="text-sm font-semibold text-gray-700">Tasa de Deposición ($\text{DR}$): <span class="float-right text-cyan-600">${DR.toFixed(2)} kg/h</span></p>
+                
+                <div class="pt-2 border-t border-gray-200">
+                    <p class="text-xs text-gray-500 mb-1">Fórmula Masa de Consumible: $M = L \\times \\text{Factor de Consumo}$</p>
+                    <p class="text-sm font-bold text-gray-800">Masa Requerida ($\text{M}$): <span class="float-right text-indigo-700">${M.toFixed(3)} kg</span></p>
+                </div>
 
-        // 4. Ajuste fino por espesor (Simulación de ajuste de Amp/Volt)
-        // Solo para MIG/MAG, ya que TIG depende más del precalentamiento y la velocidad de avance para el espesor
-        if (process.includes('MIG/MAG')) {
-            let [minA, maxA] = parameters.amperage.split(' - ').map(s => parseFloat(s.replace(' A', '')));
+                <div class="pt-2 border-t border-gray-200">
+                    <p class="text-xs text-gray-500 mb-1">Fórmula Tiempo Neto: $T_{\\text{neto}} = M / \\text{DR}$</p>
+                    <p class="text-sm font-bold text-gray-800">Tiempo Soldadura Est. ($\text{T}_{\text{neto}}$): <span class="float-right text-indigo-700">${T_neto.toFixed(2)} horas</span></p>
+                </div>
+            </div>
+
+            <div class="mt-4 p-4 bg-cyan-50 rounded-lg border border-cyan-300">
+                <h4 class="font-bold text-md text-cyan-800 mb-2">Resumen Financiero</h4>
+                <p class="text-sm font-medium text-gray-800">Costo Material ($\text{C}_m$): <span class="float-right font-bold text-red-600">USD ${Cm.toFixed(2)}</span></p>
+                <p class="text-sm font-medium text-gray-800">Costo Mano de Obra ($\text{C}_h$): <span class="float-right font-bold text-red-600">USD ${Ch_total.toFixed(2)}</span></p>
+                <p class="text-md font-extrabold text-gray-900 pt-2 border-t border-cyan-400 mt-2">PRESUPUESTO TOTAL ($\text{C}_{\text{total}}$): <span class="float-right text-2xl text-cyan-700">USD ${C_total.toFixed(2)}</span></p>
+            </div>
+        `;
+        resultsDiv.classList.remove('hidden');
+        displayMessage("ADHSM: Reporte de presupuesto generado. Utilice estos datos para la planificación financiera del proyecto.", false);
+    }
+
+    // --- MÓDULO 3: TABLA DE REFERENCIA RÁPIDA ---
+
+    function renderModule3() {
+        currentModule = 3;
+        messageBox.classList.add('hidden');
+        appContainer.innerHTML = `
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center border-b pb-2">Módulo 3: Tabla de Referencia Rápida</h2>
+            <p class="text-sm text-gray-600 mb-4">Referencia rápida para gases TIG (EN ISO 14175) y tipos de tungsteno (AWS).</p>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-300 rounded-lg text-xs">
+                    <thead>
+                        <tr class="bg-cyan-100">
+                            <th class="px-3 py-2 text-left text-gray-700">Proceso/Material</th>
+                            <th class="px-3 py-2 text-left text-gray-700">Gas Protector (Típico)</th>
+                            <th class="px-3 py-2 text-left text-gray-700">Tipo de Tungsteno</th>
+                            <th class="px-3 py-2 text-left text-gray-700">Color</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-t">
+                            <td class="px-3 py-3 font-medium text-gray-800">TIG DC / Acero Inoxidable</td>
+                            <td class="px-3 py-3">Argón Puro (I1)</td>
+                            <td class="px-3 py-3">Torio 2% ($\text{ThO}_2$)</td>
+                            <td class="px-3 py-3 bg-red-100 text-red-700 font-semibold rounded-lg">Rojo</td>
+                        </tr>
+                        <tr class="border-t bg-gray-50">
+                            <td class="px-3 py-3 font-medium text-gray-800">TIG DC / Acero al Carbono</td>
+                            <td class="px-3 py-3">Argón Puro (I1)</td>
+                            <td class="px-3 py-3">Lantano 1.5% ($\text{La}_2\text{O}_3$)</td>
+                            <td class="px-3 py-3 bg-yellow-100 text-yellow-700 font-semibold rounded-lg">Oro</td>
+                        </tr>
+                        <tr class="border-t">
+                            <td class="px-3 py-3 font-medium text-gray-800">TIG AC / Aluminio</td>
+                            <td class="px-3 py-3">Argón Puro (I1)</td>
+                            <td class="px-3 py-3">Circonio ($\text{ZrO}_2$) o Lantano 1.5%</td>
+                            <td class="px-3 py-3 bg-orange-100 text-orange-700 font-semibold rounded-lg">Café/Oro</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
-            // Si el espesor es mucho menor, ajustamos a la baja
-            if (thickness < 4 && maxA > 200) { 
-                 minA = Math.round(minA * 0.8);
-                 maxA = Math.round(maxA * 0.85);
-                 parameters.justify.amperage += ' (Ajuste por Espesor e < 4mm).';
-            } 
-            // Si el espesor es mucho mayor, ajustamos al alza o sugerimos multi-pasada
-            else if (thickness > 12 && maxA < 300) { 
-                 minA = Math.round(minA * 1.15);
-                 maxA = Math.round(maxA * 1.3);
-                 parameters.amperage = `${minA} - ${maxA} A (Recomendado Multi-Pasada)`;
-                 parameters.justify.amperage += ' (Ajuste por Espesor e > 12mm. Se requiere Multi-Pasada).';
-            }
-            // Reasignar el valor ajustado
-            if (thickness < 4 || thickness > 12) {
-                parameters.amperage = `${minA} - ${maxA} A`;
-            }
-        }
+            <p class="text-xs text-gray-500 mt-4">Nota: El Torio es radioactivo, se recomienda el Lantano (Oro) como sustituto de alto rendimiento para DC.</p>
 
-        // Calcular el tiempo de soldadura
-        parameters.weldTime = calculateWeldTime(parameters.travelSpeed);
-        
-        return parameters;
+            <button onclick="renderMenu()" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 mt-6 rounded-lg transition duration-150">
+                ← Volver al Menú
+            </button>
+        `;
     }
 
-    /**
-     * Muestra los resultados en la UI.
-     * @param {object} params - Los parámetros calculados.
-     */
-    function displayResults(params) {
-        // PARÁMETROS OPERACIONALES
-        document.getElementById('output-amperage').textContent = params.amperage;
-        document.getElementById('justify-amperage').textContent = params.justify.amperage;
-
-        document.getElementById('output-voltage').textContent = params.voltage;
-        document.getElementById('justify-voltage').textContent = params.justify.voltage;
-
-        document.getElementById('output-wfs').textContent = params.wfs;
-        document.getElementById('justify-wfs').textContent = params.justify.wfs;
-
-        document.getElementById('output-travel-speed').textContent = params.travelSpeed;
-        document.getElementById('justify-travel-speed').textContent = params.justify.travelSpeed;
-
-        document.getElementById('output-gas-flow').textContent = params.gasFlow;
-        document.getElementById('justify-gas-flow').textContent = params.justify.gasFlow;
-
-        document.getElementById('output-stick-out').textContent = params.stickOut;
-        document.getElementById('justify-stick-out').textContent = params.justify.stickOut;
-        
-        document.getElementById('output-advanced-param').textContent = params.advancedParam;
-        document.getElementById('justify-advanced-param').textContent = params.justify.advancedParam;
-
-        // CÁLCULOS DE DESEMPEÑO
-        document.getElementById('output-heat-input').textContent = params.heatInput;
-        document.getElementById('output-deposition-rate').textContent = params.depositionRate;
-        document.getElementById('output-weld-time').textContent = params.weldTime;
-        
-        // CONSIDERACIONES TÉCNICAS
-        document.getElementById('output-recommendation').textContent = params.recommendation;
-
-        // Ocultar/Mostrar filas específicas (WFS para TIG / Pulso/AC para no TIG/MIG)
-        const isTIG = processSelect.value.includes('TIG');
-        wfsRow.children[0].textContent = isTIG ? 'Tasa de Fusión de Varilla' : 'Vel. Alimentación (Vf)';
-        if (isTIG) {
-            wfsRow.children[1].textContent = params.wfs;
-        }
-
-        resultsArea.classList.remove('hidden');
-    }
-
-    // Event Listener para el botón de cálculo
-    calculateBtn.addEventListener('click', () => {
-        const parameters = calculateParameters();
-        if (parameters) {
-            displayResults(parameters);
-        }
-    });
+    // Inicializar la aplicación al cargar la ventana
+    window.onload = renderMenu;
 </script>
 
 </body>
